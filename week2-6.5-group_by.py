@@ -1,4 +1,7 @@
-def group_by(func, it):
+TEST_DICT = ["hi", "bye", "yo", "try"]
+
+
+def group_by(function, iterable_object):
     """
     this function receives a function and an iterable function, the function uses
     a dict comprehension that consists of a list comprehension to return a dict
@@ -9,8 +12,14 @@ def group_by(func, it):
     :return: a dict, keys are the values of that function and the values are the iterable members that
             satisfy that function
     """
-    result = {func(word.strip()): [w for w in it if func(w) == func(word)] for word in it}
+    result = {key: [word for word in iterable_object if function(word.strip()) == key] for key in
+              set(map(function, iterable_object))}
     return result
 
 
-print(group_by(len, ["hi", "bye", "yo", "try"]))
+def main():
+    print(group_by(len, TEST_DICT))
+
+
+if __name__ == "__main__":
+    main()
