@@ -1,6 +1,15 @@
 import re
 
 
+PARAGRAPH_TO_COUNT = """
+    You see, wire telegraph is a kind of a very, very long cat.
+    You pull his tail in New York and his head is meowing in Los Angeles.
+    Do you understand this?
+    And radio operates exactly the same way: you send signals here, they receive them there.
+    The only difference is that there is no cat.
+    """
+
+
 def count_words(text):
     """
     this function receives a string, uses a generator expression to remove the all special characters
@@ -15,11 +24,9 @@ def count_words(text):
 
     return result
 
+def main():
+    print(count_words(PARAGRAPH_TO_COUNT))
 
-print(count_words("""
-You see, wire telegraph is a kind of a very, very long cat.
-You pull his tail in New York and his head is meowing in Los Angeles.
-Do you understand this?
-And radio operates exactly the same way: you send signals here, they receive them there.
-The only difference is that there is no cat.
-"""))
+
+if __name__ == "__main__":
+    main()
