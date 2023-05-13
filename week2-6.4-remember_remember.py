@@ -2,6 +2,8 @@ import PIL
 from PIL import Image
 
 
+IMG_PATH = 'resources/code.png'
+
 def remember(path):
     """
     this program imports pil (pillow) module that can manipulates and operates on images
@@ -23,4 +25,9 @@ def remember(path):
     return result
 
 
-print(remember('resources/code.png'))
+def main():
+    print(remember(IMG_PATH))
+
+
+if __name__ == "__main__":
+    main()
