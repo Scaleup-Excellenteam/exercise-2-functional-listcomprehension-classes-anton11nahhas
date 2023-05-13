@@ -7,8 +7,8 @@ def group_by(function, iterable_object):
     a dict comprehension that consists of a list comprehension to return a dict
     which its keys are the value of that function for each iterable object,
     and the value is all the iterable objects that satisfies that function
-    :param func: a function
-    :param it: an iterable object
+    :param function: a function
+    :param iterable_object: an iterable object
     :return: a dict, keys are the values of that function and the values are the iterable members that
             satisfy that function
     """
