@@ -57,83 +57,86 @@ class PostOffice:
             user_box.append(message_details)
         return self.message_id
 
+    def read_inbox(self, user, N=None):
+        """
+        read the messages of a certain user
 
-    """
-    read the messages of a certain user
-
-        Args:
-            user (str): the user's name.
-            N (int): number of messages wanted.
-        Returns:
-            list: N messages that the user has
+            Args:
+                user (str): the user's name.
+                N (int): number of messages wanted.
+            Returns:
+                list: N messages that the user has
 
 
-        Examples:
-            a user has number of messages and he wants 
-            to read them.
-            
-            po_box = PostOffice(['a', 'b'])
-            po_box.send_message('a', 'b', 'Hello!')
-            po_box.send_message('a', 'b', 'How are you?')
-            po_box.send_message('a', 'b', 'nahh bru')
-            po_box.send_message('a', 'b', 'you here?')
-            print(po_box.read_inbox('b'))
-            
-            ['Hello!', 'How are you?', 'nahh bru', 'you here?']
-            
-            print(po_box.read_inbox('b', 2))
-            
-            ['Hello!', 'How are you?']
-            
-            
-            
-            
-    """
-    def read_inbox(self, user, N = 0):
-        if N == 0:
-            N = len(self.boxes[user])
+            Examples:
+                a user has number of messages and he wants
+                to read them.
 
-        messages = []
+                po_box = PostOffice(['a', 'b'])
+                po_box.send_message('a', 'b', 'Hello!')
+                po_box.send_message('a', 'b', 'How are you?')
+                po_box.send_message('a', 'b', 'nahh bru')
+                po_box.send_message('a', 'b', 'you here?')
+                print(po_box.read_inbox('b'))
+
+                ['Hello!', 'How are you?', 'nahh bru', 'you here?']
+
+                print(po_box.read_inbox('b', 2))
+
+                ['Hello!', 'How are you?']
+
+
+
+
+        """
+        if user not in self.boxes:
+            return []
+
+        messages = self.boxes[user]
+        if N is None:
+            N = len(messages)
+
         result = []
-        for usr in self.boxes:
-            if usr == user:
-                messages = self.boxes[usr]
-        for msg in islice(messages, N):
-            result.append(msg['body'])
+        for msg in messages[:N]:
+            message_details = {
+                'id': msg['id'],
+                'title': msg['title'],
+                'body': msg['body'],
+                'sender': msg['sender']
+            }
+            result.append(message_details)
 
         return result
 
-    """
-    read the inbox of a user depending on a given string
-
-        Args:
-            user (str): the user's name.
-            wanted (str): the string to search for in messages.
-        Returns:
-            list: all messages that contain wanted in them
-
-
-        Examples:
-            a user has number of messages and he wants 
-            look for messages containing 'you' in them
-
-            po_box = PostOffice(['a', 'b'])
-            po_box.send_message('a', 'b', 'Hello!')
-            po_box.send_message('a', 'b', 'How are you?')
-            po_box.send_message('a', 'b', 'nahh bru')
-            po_box.send_message('a', 'b', 'you here?')
-            print(po_box.search_inbox('b', 'you'))
-
-            ['How are you?', 'you here?']
-
-
-    """
     def search_inbox(self, user, wanted):
+        """
+            search the inbox of a user depending on a given string
+
+                Args:
+                    user (str): the user's name.
+                    wanted (str): the string to search for in messages.
+                Returns:
+                    list: all messages that contain wanted in them
+
+
+                Examples:
+                    a user has number of messages and he wants
+                    look for messages containing 'you' in them
+
+                    po_box = PostOffice(['a', 'b'])
+                    po_box.send_message('a', 'b', 'Hello!')
+                    po_box.send_message('a', 'b', 'How are you?')
+                    po_box.send_message('a', 'b', 'nahh bru')
+                    po_box.send_message('a', 'b', 'you here?')
+                    print(po_box.search_inbox('b', 'you'))
+
+                    ['How are you?', 'you here?']
+
+
+            """
         messages = self.read_inbox(user)
         result = []
         for msg in messages:
-            if msg.lower().__contains__(wanted.lower()):
+            if wanted.lower() in msg['body'].lower() or wanted.lower() in msg['title'].lower():
                 result.append(msg)
         return result
-
-
